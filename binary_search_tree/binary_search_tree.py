@@ -19,64 +19,108 @@ class BinarySearchTree:
         # if new < node.value, leftnode.insert value
         # if new > node.value, rightnode.insert value
 
-        if self.left is None and value < self.value:
-            # print(
-            #     f"\n-->val: {value} | self.left: {self.left} | self.val: {self.value}\n"
-            # )
-            self.left = BinarySearchTree(value)
-            return
+        # if self.left is None and value < self.value:
+        #     # print(
+        #     #     f"\n-->val: {value} | self.left: {self.left} | self.val: {self.value}\n"
+        #     # )
+        #     self.left = BinarySearchTree(value)
+        #     return
 
-        if self.right is None and value >= self.value:
-            self.right = BinarySearchTree(value)
-            return
+        # if self.right is None and value >= self.value:
+        #     self.right = BinarySearchTree(value)
+        #     return
+
+        # if value < self.value:
+        #     side = self.left
+
+        # else:
+        #     side = self.right
+
+        # side.insert(value)
+
+        # ? lecture solution
 
         if value < self.value:
-            side = self.left
-
+            if self.left is None:
+                self.left = BinarySearchTree(value)
+            else:
+                self.left.insert(value)
         else:
-            side = self.right
-
-        side.insert(value)
+            if self.right is None:
+                self.right = BinarySearchTree(value)
+            else:
+                self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        # if node.value == findvalue, return True
-        if target == self.value:
+        # # if node.value == findvalue, return True
+        # if target == self.value:
+        #     return True
+
+        # # find on left node
+        # if target < self.value:
+        #     side = self.left
+
+        # # find on right node
+        # else:
+        #     side = self.right
+
+        # # if != left or right, return false
+        # if side is None:
+        #     return False
+
+        # return side.contains(target)
+
+        # ? lecture solution
+
+        if self.value == target:
             return True
-
-        # find on left node
         if target < self.value:
-            side = self.left
-
-        # find on right node
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)
         else:
-            side = self.right
-
-        # if != left or right, return false
-        if side is None:
-            return False
-
-        return side.contains(target)
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
         # if there's a right, get max on right
         # else return node.value
-        while self.right is not None:
-            self = self.right
-        return self.value
+        # while self.right is not None:
+        #     self = self.right
+        # return self.value
+
+        # ? lecture solution
+
+        if self.right:
+            return self.right.get_max()
+        else:
+            return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        if not self:
-            return
+        # if not self:
+        #     return
+        # if self.left:
+        #     self.left.for_each(cb)
+        # if self.right:
+        #     self.right.for_each(cb)
+        # cb(self.value)
+
+        # ? lecture solution
+
+        cb(self.value)
+
         if self.left:
             self.left.for_each(cb)
         if self.right:
             self.right.for_each(cb)
-        cb(self.value)
 
     # DAY 2 Project -----------------------
 
