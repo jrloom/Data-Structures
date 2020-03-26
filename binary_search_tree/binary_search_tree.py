@@ -1,5 +1,6 @@
 import sys
-sys.path.append('../queue_and_stack')
+
+sys.path.append("../queue_and_stack")
 from dll_queue import Queue
 from dll_stack import Stack
 
@@ -12,21 +13,114 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        # check if empty
+        # if empty, put node here/at root
+        # else
+        # if new < node.value, leftnode.insert value
+        # if new > node.value, rightnode.insert value
+
+        # if self.left is None and value < self.value:
+        #     # print(
+        #     #     f"\n-->val: {value} | self.left: {self.left} | self.val: {self.value}\n"
+        #     # )
+        #     self.left = BinarySearchTree(value)
+        #     return
+
+        # if self.right is None and value >= self.value:
+        #     self.right = BinarySearchTree(value)
+        #     return
+
+        # if value < self.value:
+        #     side = self.left
+
+        # else:
+        #     side = self.right
+
+        # side.insert(value)
+
+        # ? lecture solution
+
+        if value < self.value:
+            if self.left is None:
+                self.left = BinarySearchTree(value)
+            else:
+                self.left.insert(value)
+        else:
+            if self.right is None:
+                self.right = BinarySearchTree(value)
+            else:
+                self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        # # if node.value == findvalue, return True
+        # if target == self.value:
+        #     return True
+
+        # # find on left node
+        # if target < self.value:
+        #     side = self.left
+
+        # # find on right node
+        # else:
+        #     side = self.right
+
+        # # if != left or right, return false
+        # if side is None:
+        #     return False
+
+        # return side.contains(target)
+
+        # ? lecture solution
+
+        if self.value == target:
+            return True
+        if target < self.value:
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)
+        else:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        # if there's a right, get max on right
+        # else return node.value
+        # while self.right is not None:
+        #     self = self.right
+        # return self.value
+
+        # ? lecture solution
+
+        if self.right:
+            return self.right.get_max()
+        else:
+            return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        # if not self:
+        #     return
+        # if self.left:
+        #     self.left.for_each(cb)
+        # if self.right:
+        #     self.right.for_each(cb)
+        # cb(self.value)
+
+        # ? lecture solution
+
+        cb(self.value)
+
+        if self.left:
+            self.left.for_each(cb)
+        if self.right:
+            self.right.for_each(cb)
 
     # DAY 2 Project -----------------------
 
@@ -38,12 +132,33 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # Create queue, add node
+        queue = Queue()
+        queue.enqueue(node)
+
+        while queue.len() > 0:
+            node = queue.dequeue()
+            print(node.value)
+            if node.right:
+                queue.enqueue(node.right)
+                pass
+            if node.left:
+                queue.enqueue(node.left)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # Create stack, add node
+        stack = Stack()
+        stack.push(node)
+
+        while stack.len() > 0:
+            node = stack.pop()
+            print(node.value)
+            if node.right:
+                stack.push(node.right)
+            if node.left:
+                stack.push(node.left)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
